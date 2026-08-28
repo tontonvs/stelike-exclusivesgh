@@ -99,7 +99,7 @@ export function TopNav() {
                     placeholder="Search for what you need"
                     className="w-full bg-transparent text-sm outline-none"
                   />
-                  <button onClick={close} aria-label="Close search">
+                  <button onClick={close} aria-label="Close search" className="glass-x size-8 hover:scale-105">
                     <X className="size-4" />
                   </button>
                 </div>
@@ -156,8 +156,8 @@ export function TopNav() {
               <div className="flex h-full flex-col bg-background p-5 animate-rise">
                 <div className="flex items-center justify-between">
                   <p className="font-display text-lg font-bold">Your cart</p>
-                  <button onClick={close} aria-label="Close cart">
-                    <X className="size-4" />
+                  <button onClick={close} aria-label="Close cart" className="glass-x size-10 hover:scale-105">
+                    <X className="size-5" />
                   </button>
                 </div>
                 {cart.length === 0 ? (
@@ -226,8 +226,8 @@ export function TopNav() {
               <div className="flex h-full flex-col bg-background p-5 animate-rise">
                 <div className="flex items-center justify-between">
                   <p className="font-display text-lg font-bold">Notifications</p>
-                  <button onClick={close} aria-label="Close notifications">
-                    <X className="size-4" />
+                  <button onClick={close} aria-label="Close notifications" className="glass-x size-10 hover:scale-105">
+                    <X className="size-5" />
                   </button>
                 </div>
                 <ul className="mt-4 flex-1 space-y-3 overflow-y-auto">
