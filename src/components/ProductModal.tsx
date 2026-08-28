@@ -21,7 +21,7 @@ export function ProductModal({
 
   return (
     <div className="fixed inset-0 z-[70] flex justify-center bg-foreground/40 backdrop-blur-sm animate-soft">
-      <div className="relative flex h-full w-full max-w-xl flex-col bg-background animate-rise">
+      <div className="relative mt-16 mb-[84px] flex w-full max-w-xl flex-col overflow-hidden bg-background animate-rise md:mb-14 md:rounded-sm">
         <button
           onClick={onClose}
           aria-label="Close"
@@ -92,7 +92,7 @@ export function ProductModal({
               toast.success("Added to cart", { description: product.name });
               onClose();
             }}
-            className="flex-1 rounded-sm bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            className="flex-1 rounded-sm bg-info py-3.5 text-base font-semibold text-info-foreground transition-opacity hover:opacity-90"
           >
             Add to Cart
           </button>
