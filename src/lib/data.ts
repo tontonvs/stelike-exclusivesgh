@@ -43,7 +43,7 @@ export const products: Product[] = [
     description:
       "Honed marble top on a slim powder-coated steel frame. Built to anchor a living room without crowding it.",
     specs: [spec("Top", "Honed marble"), spec("Base", "Powder-coated steel"), spec("Size", "110 x 60 x 42 cm")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "ct-02",
@@ -55,7 +55,7 @@ export const products: Product[] = [
     description:
       "Tempered glass over a fluted walnut body with an open lower shelf for books and remotes.",
     specs: [spec("Top", "10mm tempered glass"), spec("Body", "Fluted walnut"), spec("Size", "120 x 65 x 40 cm")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "ct-03",
@@ -87,7 +87,7 @@ export const products: Product[] = [
     description:
       "Wall-hung fluted console with soft-close drawers and full cable management. Mounting included.",
     specs: [spec("Mount", "Wall-hung"), spec("Drawers", "4 soft-close"), spec("Length", "220 cm")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "tv-02",
@@ -130,7 +130,7 @@ export const products: Product[] = [
     image: img.mirror,
     description: "Frameless round mirror with warm LED edge lighting.",
     specs: [spec("Frame", "Frameless, LED edge light"), spec("Shape", "Round"), spec("Diameter", "90 cm")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "mr-02",
@@ -172,7 +172,7 @@ export const products: Product[] = [
     description:
       "Platform bed with an extended headboard and matching floating bedside tables.",
     specs: [spec("Size", "King, 6 x 6.5 ft"), spec("Finish", "Matte white"), spec("Extras", "Floating nightstands")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "bf-02",
@@ -213,7 +213,7 @@ export const products: Product[] = [
     image: img.dresser,
     description: "Handleless six-drawer dresser with a routed grip channel.",
     specs: [spec("Drawers", "6"), spec("Finish", "Matte white"), spec("Size", "140 x 45 x 80 cm")],
-    badge: "Brand New",
+    badge: "New",
   },
   {
     id: "dr-02",

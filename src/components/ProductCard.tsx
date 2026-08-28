@@ -17,7 +17,7 @@ export function ProductCard({
     >
       {showBadge && product.badge ? (
         <span className="glass-bar absolute left-2 top-2 z-10 rounded-sm bg-info px-1.5 py-0.5 text-[9px] font-medium tracking-wide text-info-foreground shadow-card">
-          New
+          {product.badge}
         </span>
       ) : null}
       <div className="aspect-square w-full overflow-hidden bg-muted">
