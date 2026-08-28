@@ -73,6 +73,31 @@
   --footer-foreground: oklch(0.965 0.002 60);
 }
 
+.dark {
+  --background: oklch(0.17 0.02 260);
+  --foreground: oklch(0.95 0.005 250);
+  --card: oklch(0.21 0.022 260);
+  --card-foreground: oklch(0.95 0.005 250);
+  --popover: oklch(0.21 0.022 260);
+  --popover-foreground: oklch(0.95 0.005 250);
+  --primary: oklch(0.92 0.005 250);
+  --primary-foreground: oklch(0.19 0.02 260);
+  --secondary: oklch(0.25 0.025 260);
+  --secondary-foreground: oklch(0.95 0.005 250);
+  --muted: oklch(0.25 0.025 260);
+  --muted-foreground: oklch(0.68 0.015 255);
+  --accent: oklch(0.27 0.03 260);
+  --accent-foreground: oklch(0.95 0.005 250);
+  --border: oklch(0.3 0.025 260);
+  --input: oklch(0.3 0.025 260);
+  --ring: oklch(0.6 0.05 255);
+  --nav: oklch(0.22 0.025 260);
+  --nav-foreground: oklch(0.96 0.004 250);
+  --skeleton: oklch(0.27 0.025 260);
+  --footer: oklch(0.14 0.018 260);
+  --footer-foreground: oklch(0.94 0.005 250);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -108,6 +133,48 @@
 @utility glass-bar {
   background: oklch(0.24 0.012 50 / 0.05);
   backdrop-filter: blur(18px) saturate(140%);
+}
+
+@utility glass-x {
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: oklch(1 0 0 / 0.35);
+  border: 1px solid oklch(1 0 0 / 0.5);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 4px 16px oklch(0.25 0.012 50 / 0.12);
+  transition: transform 0.2s ease;
+}
+
+.dark .glass-x {
+  background: oklch(0.3 0.025 260 / 0.45);
+  border-color: oklch(1 0 0 / 0.14);
+}
+
+@utility ring-rainbow {
+  background: conic-gradient(
+    from 20deg,
+    #feda75,
+    #fa7e1e,
+    #d62976,
+    #962fbf,
+    #4f5bd5,
+    #feda75
+  );
+}
+
+@utility ring-rainbow-broken {
+  background: conic-gradient(
+    from 40deg,
+    #feda75 0deg 70deg,
+    transparent 70deg 90deg,
+    #fa7e1e 90deg 160deg,
+    transparent 160deg 180deg,
+    #d62976 180deg 250deg,
+    transparent 250deg 270deg,
+    #962fbf 270deg 340deg,
+    transparent 340deg 360deg
+  );
 }
 
 @keyframes shimmer-slide {

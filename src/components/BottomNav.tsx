@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Store, ClipboardList, Phone } from "lucide-react";
+import { Home, Store, ClipboardList, Phone, Moon, Sun } from "lucide-react";
 
 const items = [
   { to: "/", label: "Home", Icon: Home },
@@ -10,11 +11,16 @@ const items = [
 
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
   return (
     <>
-      {/* Mobile: floating glass pill */}
-      <nav className="fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-3 md:hidden">
+      {/* Mobile: floating glass pill + mode toggle beside it */}
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-center gap-2 px-4 pb-3 md:hidden">
         <div className="glass-bar flex w-full max-w-[280px] items-center gap-1 rounded-full border border-foreground/5 p-1 shadow-float">
           {items.map(({ to, label, Icon }) => {
             const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
@@ -41,6 +47,17 @@ export function BottomNav() {
             );
           })}
         </div>
+        <button
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          onClick={() => setDark((d) => !d)}
+          className="glass-bar grid size-[38px] shrink-0 place-items-center rounded-full border border-foreground/5 shadow-float transition-transform hover:scale-105"
+        >
+          {dark ? (
+            <Sun className="size-4 text-foreground" />
+          ) : (
+            <Moon className="size-4 text-foreground" />
+          )}
+        </button>
       </nav>
 
       {/* Desktop: traditional full-width bar */}

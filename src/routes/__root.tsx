@@ -16,6 +16,7 @@ import { StoreProvider } from "../lib/store";
 import { LaunchOverlay } from "../components/LaunchOverlay";
 import { TopNav } from "../components/TopNav";
 import { BottomNav } from "../components/BottomNav";
+import { WhatsAppFloat } from "../components/WhatsAppFloat";
 
 
 function NotFoundComponent() {
@@ -142,6 +143,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <BottomNav />
+        <WhatsAppFloat />
         <Toaster position="top-center" />
       </StoreProvider>
     </QueryClientProvider>

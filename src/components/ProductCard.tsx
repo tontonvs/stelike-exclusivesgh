@@ -16,7 +16,7 @@ export function ProductCard({
       className="group relative flex flex-col overflow-hidden rounded-sm bg-card text-left shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-float"
     >
       {showBadge && product.badge ? (
-        <span className="glass-bar absolute left-2 top-2 z-10 rounded-sm bg-info px-1.5 py-0.5 text-[9px] font-medium tracking-wide text-info-foreground shadow-card">
+        <span className="glass-bar absolute left-2 top-2 z-10 rounded-sm border border-info bg-info/85 px-1.5 py-0.5 text-[9px] font-medium tracking-wide text-info-foreground shadow-card">
           {product.badge}
         </span>
       ) : null}

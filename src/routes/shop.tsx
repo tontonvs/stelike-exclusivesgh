@@ -92,7 +92,7 @@ function Shop() {
         <button
           onClick={() => setCategory(undefined)}
           className={`shrink-0 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
-            !category ? "bg-primary text-primary-foreground" : "bg-card shadow-card"
+            !category ? "bg-info text-info-foreground" : "bg-card shadow-card"
           }`}
         >
           All
@@ -103,7 +103,7 @@ function Shop() {
             onClick={() => setCategory(c.id)}
             className={`shrink-0 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
               category === c.id
-                ? "bg-primary text-primary-foreground"
+                ? "bg-info text-info-foreground"
                 : "bg-card shadow-card"
             }`}
           >

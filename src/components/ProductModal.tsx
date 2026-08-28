@@ -25,7 +25,7 @@ export function ProductModal({
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 z-10 grid size-10 place-items-center rounded-full bg-card shadow-card transition-transform hover:scale-105"
+          className="glass-x absolute right-4 top-4 z-10 size-10 hover:scale-105"
         >
           <X className="size-5" />
         </button>
