@@ -42,6 +42,7 @@ export function TopNav() {
     : [];
 
   const close = () => setPanel(null);
+  const fullscreen = panel === "cart" || panel === "bell";
 
   return (
     <>
@@ -80,11 +81,11 @@ export function TopNav() {
 
       {panel && (
         <div
-          className="fixed inset-0 z-[65] bg-foreground/30 backdrop-blur-[2px] animate-soft"
+          className={`fixed inset-0 z-[65] animate-soft ${fullscreen ? "bg-background" : "bg-foreground/30 backdrop-blur-[2px]"}`}
           onClick={close}
         >
           <div
-            className="mx-auto mt-16 max-w-5xl px-4"
+            className={fullscreen ? "flex h-full flex-col" : "mx-auto mt-16 max-w-5xl px-4"}
             onClick={(e) => e.stopPropagation()}
           >
             {panel === "search" && (
@@ -152,9 +153,9 @@ export function TopNav() {
             )}
 
             {panel === "cart" && (
-              <div className="rounded-sm bg-card p-4 shadow-float animate-rise">
+              <div className="flex h-full flex-col bg-background p-5 animate-rise">
                 <div className="flex items-center justify-between">
-                  <p className="font-display text-base font-bold">Your cart</p>
+                  <p className="font-display text-lg font-bold">Your cart</p>
                   <button onClick={close} aria-label="Close cart">
                     <X className="size-4" />
                   </button>
@@ -165,7 +166,7 @@ export function TopNav() {
                   </p>
                 ) : (
                   <>
-                    <ul className="mt-3 max-h-[50vh] space-y-2 overflow-y-auto">
+                    <ul className="mt-4 flex-1 space-y-3 overflow-y-auto">
                       {cart.map((l) => (
                         <li key={l.product.id} className="flex items-center gap-3">
                           <img
@@ -203,7 +204,7 @@ export function TopNav() {
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-4 flex items-center justify-between border-t pt-3">
+                    <div className="mt-4 flex items-center justify-between border-t pt-4">
                       <span className="text-sm text-muted-foreground">Total</span>
                       <span className="text-base font-bold">{cedis(cartTotal)}</span>
                     </div>
@@ -222,16 +223,16 @@ export function TopNav() {
             )}
 
             {panel === "bell" && (
-              <div className="rounded-sm bg-card p-4 shadow-float animate-rise">
+              <div className="flex h-full flex-col bg-background p-5 animate-rise">
                 <div className="flex items-center justify-between">
-                  <p className="font-display text-base font-bold">Notifications</p>
+                  <p className="font-display text-lg font-bold">Notifications</p>
                   <button onClick={close} aria-label="Close notifications">
                     <X className="size-4" />
                   </button>
                 </div>
-                <ul className="mt-3 space-y-3">
+                <ul className="mt-4 flex-1 space-y-3 overflow-y-auto">
                   {notifications.map((n) => (
-                    <li key={n.id} className="rounded-sm border p-3">
+                    <li key={n.id} className="rounded-sm border bg-card p-4">
                       <p className="text-sm font-semibold">{n.title}</p>
                       <p className="text-sm text-muted-foreground">{n.body}</p>
                       <p className="mt-1 text-xs text-muted-foreground">{n.time}</p>
@@ -260,7 +261,7 @@ export function TopNav() {
                 <div className="my-1 h-px bg-border" />
                 <button
                   onClick={close}
-                  className="block w-full rounded-sm px-3 py-2.5 text-left text-sm font-semibold hover:bg-muted"
+                  className="block w-full rounded-sm px-3 py-2.5 text-left text-sm font-semibold text-destructive hover:bg-destructive/10"
                 >
                   Log out
                 </button>
