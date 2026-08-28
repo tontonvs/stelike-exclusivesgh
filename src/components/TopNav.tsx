@@ -12,6 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { cedis, type Product } from "@/lib/data";
+import logoAsset from "@/assets/stelike-logo.png.asset.json";
 import { useStore } from "@/lib/store";
 import { ProductModal } from "./ProductModal";
 
