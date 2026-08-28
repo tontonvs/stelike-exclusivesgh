@@ -68,12 +68,13 @@ function Home() {
 
   return (
     <div className="animate-soft">
-      <section className="relative h-[6cm] w-full overflow-hidden">
+      <section className="relative h-[6cm] w-full overflow-hidden rounded-b-[28px]">
         <img
           src={img.hero}
           alt="LED backlit media wall by Stelike Exclusives"
           className="size-full object-cover"
         />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 border-t border-white/25 bg-white/10 backdrop-blur-md" />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/45 to-transparent" />
         <div key={i} className="absolute inset-0 flex flex-col justify-center gap-1 px-5 animate-rise">
           <h1 className="font-display text-2xl font-bold text-background sm:text-3xl">
@@ -96,20 +97,28 @@ function Home() {
       <section className="px-5 pt-7">
         <h2 className="text-lg font-bold">Shop by Category</h2>
         <div className="mt-4 flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none]">
-          {categories.map((c) => (
+          {categories.map((c, idx) => (
             <Link
               key={c.id}
               to="/shop"
               search={{ category: c.id }}
               className="group flex w-[92px] shrink-0 flex-col items-center gap-2"
             >
-              <span className="size-[86px] overflow-hidden rounded-full bg-card shadow-card transition-transform duration-300 group-hover:scale-105">
-                <img
-                  src={c.image}
-                  alt={c.label}
-                  loading="lazy"
-                  className="size-full object-cover"
-                />
+              <span
+                className={`grid size-[92px] place-items-center rounded-full p-[3px] transition-transform duration-300 group-hover:scale-105 ${
+                  idx % 2 === 0 ? "ring-rainbow-broken" : "ring-rainbow"
+                }`}
+              >
+                <span className="grid size-full place-items-center rounded-full bg-background p-[2px]">
+                  <span className="size-full overflow-hidden rounded-full bg-card shadow-card">
+                    <img
+                      src={c.image}
+                      alt={c.label}
+                      loading="lazy"
+                      className="size-full object-cover"
+                    />
+                  </span>
+                </span>
               </span>
               <span className="text-center text-xs font-semibold text-muted-foreground">
                 {c.label}
