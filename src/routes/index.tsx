@@ -80,14 +80,18 @@ function Home() {
         <div
           key={i}
           className="absolute inset-0 flex flex-col justify-center gap-1 px-5 animate-rise"
-          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9)" }}
         >
           <h1 className="font-display text-2xl font-bold text-background sm:text-3xl">
             <span className="text-accent">{slide.title}</span>
             <br />
             {slide.heading}
           </h1>
-          <p className="max-w-md text-sm leading-snug text-background/95">{slide.body}</p>
+          <p
+            className="max-w-md text-sm leading-snug text-background/95"
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.5)" }}
+          >
+            {slide.body}
+          </p>
           {slide.cta && (
             <Link
               to={slide.cta.to}
