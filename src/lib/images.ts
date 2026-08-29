@@ -1,12 +1,8 @@
 import heroAsset from "@/assets/hero_image.jpg.asset.json";
 import tvStandAsset from "@/assets/tv-stand.png.asset.json";
-import mirrorAsset from "@/assets/mirror.png.asset.json";
-import bedAsset from "@/assets/bed8.jpg.asset.json";
 import dresserAsset from "@/assets/dresser.png.asset.json";
 import marbleTable from "@/assets/marble-table.jpg";
 import glassTable from "@/assets/glass-table.jpg";
-import vanityMirror from "@/assets/vanity-mirror.jpg";
-import upholsteredBed from "@/assets/upholstered-bed.jpg";
 
 // Real category cover photos
 import centerTablesCategory from "@/assets/center-tables-category.png";
@@ -15,19 +11,65 @@ import dressersCategory from "@/assets/dressers-category.png";
 import bedFramesCategory from "@/assets/bed-frames-category.jpg";
 import mirrorsCategory from "@/assets/mirrors-category.jpg";
 
+// Real mirror product photos
+import mirrorProduct1 from "@/assets/mirror-product-1.jpg";
+import mirrorProduct2 from "@/assets/mirror-product-2.jpg";
+import mirrorProduct3 from "@/assets/mirror-product-3.jpg";
+import mirrorProduct4 from "@/assets/mirror-product-4.jpg";
+import mirrorProduct5 from "@/assets/mirror-product-5.jpg";
+import mirrorProduct6 from "@/assets/mirror-product-6.jpg";
+import mirrorProduct7 from "@/assets/mirror-product-7.jpg";
+import mirrorProduct8 from "@/assets/mirror-product-8.jpg";
+import mirrorProduct9 from "@/assets/mirror-product-9.jpg";
+import mirrorProduct10 from "@/assets/mirror-product-10.jpg";
+
+// Real bed frame product photos
+import bedProduct1 from "@/assets/bed-product-1.jpg";
+import bedProduct2 from "@/assets/bed-product-2.jpg";
+import bedProduct3 from "@/assets/bed-product-3.jpg";
+import bedProduct4 from "@/assets/bed-product-4.jpg";
+import bedProduct5 from "@/assets/bed-product-5.jpg";
+import bedProduct6 from "@/assets/bed-product-6.jpg";
+import bedProduct7 from "@/assets/bed-product-7.jpg";
+import bedProduct8 from "@/assets/bed-product-8.jpg";
+import bedProduct9 from "@/assets/bed-product-9.jpg";
+import bedProduct10 from "@/assets/bed-product-10.jpg";
+
 export const img = {
   hero: heroAsset.url,
   tvStand: tvStandAsset.url,
-  mirror: mirrorAsset.url,
-  bed: bedAsset.url,
   dresser: dresserAsset.url,
   marbleTable,
   glassTable,
-  vanityMirror,
-  upholsteredBed,
   centerTablesCategory,
   tvStandsCategory,
   dressersCategory,
   bedFramesCategory,
   mirrorsCategory,
 };
+
+export const mirrorProducts = [
+  mirrorProduct1,
+  mirrorProduct2,
+  mirrorProduct3,
+  mirrorProduct4,
+  mirrorProduct5,
+  mirrorProduct6,
+  mirrorProduct7,
+  mirrorProduct8,
+  mirrorProduct9,
+  mirrorProduct10,
+];
+
+export const bedProducts = [
+  bedProduct1,
+  bedProduct2,
+  bedProduct3,
+  bedProduct4,
+  bedProduct5,
+  bedProduct6,
+  bedProduct7,
+  bedProduct8,
+  bedProduct9,
+  bedProduct10,
+];
