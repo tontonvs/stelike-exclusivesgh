@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { cedis, type Product } from "@/lib/data";
 import { useStore } from "@/lib/store";
@@ -13,6 +14,12 @@ export function ProductModal({
   onSelect: (p: Product) => void;
 }) {
   const { products, addToCart } = useStore();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [product?.id]);
+
   if (!product) return null;
 
   const related = products
@@ -30,7 +37,7 @@ export function ProductModal({
           <X className="size-5" />
         </button>
 
-        <div className="flex-1 overflow-y-auto px-5 pb-28 pt-16">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 pb-28 pt-16">
           <img
             src={product.image}
             alt={product.name}

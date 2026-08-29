@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Check,
   MessageCircle,
@@ -112,6 +112,10 @@ function Checkout() {
   const { cart, cartTotal, placeOrder, clearCart } = useStore();
 
   const [stage, setStage] = useState<Stage>("method");
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [stage]);
   const [fulfillment, setFulfillment] = useState<Fulfillment | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", email: "", address: "", note: "" });
   const [sharedLocation, setSharedLocation] = useState<{ lat: number; lng: number } | null>(null);

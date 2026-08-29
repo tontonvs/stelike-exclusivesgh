@@ -47,9 +47,16 @@ export function BottomNav() {
           <Link
             to="/contact"
             aria-label="Contact"
-            className="grid size-11 shrink-0 place-items-center rounded-full bg-white shadow-card transition-transform active:scale-95"
+            className={`grid size-11 shrink-0 place-items-center rounded-full transition-all duration-300 active:scale-95 ${
+              isActive("/contact") ? "bg-white shadow-card" : "bg-transparent"
+            }`}
           >
-            <Send className="size-[18px] text-neutral-900" strokeWidth={2} />
+            <Send
+              className={`size-[18px] transition-opacity ${
+                isActive("/contact") ? "text-neutral-900 opacity-100" : "text-white opacity-55"
+              }`}
+              strokeWidth={isActive("/contact") ? 2.4 : 1.8}
+            />
           </Link>
         </div>
         <button
