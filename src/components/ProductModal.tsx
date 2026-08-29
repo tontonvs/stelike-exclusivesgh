@@ -20,8 +20,8 @@ export function ProductModal({
     .slice(0, 3);
 
   return (
-    <div className="fixed inset-0 z-[70] flex justify-center bg-foreground/40 backdrop-blur-sm animate-soft">
-      <div className="relative mt-16 mb-[84px] flex w-full max-w-xl flex-col overflow-hidden bg-background animate-rise md:mb-14 md:rounded-sm">
+    <div className="fixed inset-0 z-[70] flex justify-center bg-foreground/40 px-3 backdrop-blur-sm animate-soft md:px-0">
+      <div className="relative mt-16 mb-24 flex w-full max-w-xl flex-col overflow-hidden rounded-sm bg-background animate-rise md:mb-20">
         <button
           onClick={onClose}
           aria-label="Close"
