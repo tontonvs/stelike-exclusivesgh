@@ -1,5 +1,6 @@
-import heroAsset from "@/assets/hero_image.jpg.asset.json";
-import dresserAsset from "@/assets/dresser.png.asset.json";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
 import glassTable from "@/assets/glass-table.jpg";
 
 // Real category cover photos
@@ -61,8 +62,6 @@ import tableProduct9 from "@/assets/table-product-9.jpg";
 import tableProduct10 from "@/assets/table-product-10.jpg";
 
 export const img = {
-  hero: heroAsset.url,
-  dresser: dresserAsset.url,
   glassTable,
   centerTablesCategory,
   tvStandsCategory,
@@ -70,6 +69,8 @@ export const img = {
   bedFramesCategory,
   mirrorsCategory,
 };
+
+export const heroImages = [hero1, hero2, hero3];
 
 export const mirrorProducts = [
   mirrorProduct1,

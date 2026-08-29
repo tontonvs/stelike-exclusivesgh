@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { categories, interleaveByCategory, type Product } from "@/lib/data";
-import { img } from "@/lib/images";
+import { heroImages } from "@/lib/images";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductModal } from "@/components/ProductModal";
@@ -72,19 +72,22 @@ function Home() {
     <div className="animate-soft">
       <section className="relative h-[6cm] w-full overflow-hidden rounded-b-[28px]">
         <img
-          src={img.hero}
-          alt="LED backlit media wall by Stelike Exclusives"
+          src={heroImages[i % heroImages.length]}
+          alt="Custom furniture installation by Stelike Exclusives"
           className="size-full object-cover"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 border-t border-white/25 bg-white/10 backdrop-blur-md" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/45 to-transparent" />
-        <div key={i} className="absolute inset-0 flex flex-col justify-center gap-1 px-5 animate-rise">
+        <div
+          key={i}
+          className="absolute inset-0 flex flex-col justify-center gap-1 px-5 animate-rise"
+          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9)" }}
+        >
           <h1 className="font-display text-2xl font-bold text-background sm:text-3xl">
             <span className="text-accent">{slide.title}</span>
             <br />
             {slide.heading}
           </h1>
-          <p className="max-w-md text-sm leading-snug text-background/85">{slide.body}</p>
+          <p className="max-w-md text-sm leading-snug text-background/95">{slide.body}</p>
           {slide.cta && (
             <Link
               to={slide.cta.to}
