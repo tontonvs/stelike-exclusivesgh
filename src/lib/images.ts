@@ -1,6 +1,5 @@
 import heroAsset from "@/assets/hero_image.jpg.asset.json";
 import dresserAsset from "@/assets/dresser.png.asset.json";
-import marbleTable from "@/assets/marble-table.jpg";
 import glassTable from "@/assets/glass-table.jpg";
 
 // Real category cover photos
@@ -46,10 +45,21 @@ import tvProduct8 from "@/assets/tv-product-8.png";
 import tvProduct9 from "@/assets/tv-product-9.png";
 import tvProduct10 from "@/assets/tv-product-10.png";
 
+// Real center table product photos
+import tableProduct1 from "@/assets/table-product-1.png";
+import tableProduct2 from "@/assets/table-product-2.png";
+import tableProduct3 from "@/assets/table-product-3.png";
+import tableProduct4 from "@/assets/table-product-4.png";
+import tableProduct5 from "@/assets/table-product-5.png";
+import tableProduct6 from "@/assets/table-product-6.jpg";
+import tableProduct7 from "@/assets/table-product-7.jpg";
+import tableProduct8 from "@/assets/table-product-8.jpg";
+import tableProduct9 from "@/assets/table-product-9.jpg";
+import tableProduct10 from "@/assets/table-product-10.jpg";
+
 export const img = {
   hero: heroAsset.url,
   dresser: dresserAsset.url,
-  marbleTable,
   glassTable,
   centerTablesCategory,
   tvStandsCategory,
@@ -95,4 +105,17 @@ export const tvProducts = [
   tvProduct8,
   tvProduct9,
   tvProduct10,
+];
+
+export const tableProducts = [
+  tableProduct1,
+  tableProduct2,
+  tableProduct3,
+  tableProduct4,
+  tableProduct5,
+  tableProduct6,
+  tableProduct7,
+  tableProduct8,
+  tableProduct9,
+  tableProduct10,
 ];
