@@ -12,7 +12,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { cedis, type Product } from "@/lib/data";
-import logoAsset from "@/assets/stelike-logo.png.asset.json";
+import logoSrc from "@/assets/stelike-logo.png";
 import { useStore } from "@/lib/store";
 import { ProductModal } from "./ProductModal";
 
@@ -70,7 +70,7 @@ export function TopNav() {
               STELIKE
             </span>
             <img
-              src={logoAsset.url}
+              src={logoSrc}
               alt="Stelike Exclusives"
               className="absolute left-0 size-9 object-contain transition-all duration-500 ease-out"
               style={{

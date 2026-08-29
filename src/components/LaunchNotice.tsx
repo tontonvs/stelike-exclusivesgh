@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import logoAsset from "@/assets/stelike-logo.png.asset.json";
+import logoSrc from "@/assets/stelike-logo.png";
 
 type Slide = {
   kicker: string;
@@ -14,7 +14,7 @@ const slides: Slide[] = [
     kicker: "Welcome",
     title: "Stelike Exclusives",
     body: "A members' demo of the Stelike Exclusives store — browse, preview and test-order our custom furniture.",
-    image: logoAsset.url,
+    image: logoSrc,
   },
   {
     kicker: "Heads up",
