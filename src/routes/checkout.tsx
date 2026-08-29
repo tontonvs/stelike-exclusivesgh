@@ -307,20 +307,27 @@ function Checkout() {
                 </span>
 
                 {sharedLocation ? (
-                  <div className="flex items-center justify-between rounded-sm bg-info/10 px-4 py-3">
-                    <span className="flex items-center gap-2 text-sm font-semibold text-info">
-                      <MapPin className="size-4" /> Location shared
+                  <div className="flex items-center justify-between rounded-sm bg-success/10 px-4 py-3 animate-rise-sm">
+                    <span className="flex items-center gap-2 text-sm font-semibold text-success">
+                      <span
+                        className="grid size-6 shrink-0 place-items-center rounded-full bg-success text-white"
+                        style={justLocated ? { animation: "check-pop 600ms ease-out" } : undefined}
+                      >
+                        <Check className="size-4" strokeWidth={3} />
+                      </span>
+                      Location added
                     </span>
                     <a
                       href={mapsLinkFor(sharedLocation.lat, sharedLocation.lng)}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs font-semibold text-info underline"
+                      className="text-xs font-semibold text-success underline"
                     >
                       View on map
                     </a>
                   </div>
                 ) : (
+
                   <button
                     type="button"
                     onClick={shareLocation}
