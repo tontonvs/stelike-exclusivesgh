@@ -138,6 +138,8 @@ function Checkout() {
       setSharedLocation({ lat: loc.lat, lng: loc.lng });
       setManualAddress(false);
       setForm((f) => ({ ...f, address: "" }));
+      setJustLocated(true);
+      window.setTimeout(() => setJustLocated(false), 2200);
     } catch (err) {
       setLocationError(err instanceof Error ? err.message : "Couldn't get your location.");
     } finally {
@@ -145,9 +147,10 @@ function Checkout() {
     }
   };
 
+
   const hasDeliveryAddress = fulfillment === "pickup" || !!sharedLocation || !!form.address.trim();
-  const detailsValid =
-    form.name.trim() && form.phone.trim() && form.email.trim() && hasDeliveryAddress;
+  const detailsValid = form.name.trim() && form.phone.trim() && hasDeliveryAddress;
+
 
   const resolvedAddress =
     fulfillment === "pickup"
