@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Layers, FolderOpen, Send, Moon, Sun } from "lucide-react";
+import { Home, ShoppingBag, ClipboardList, Send, Moon, Sun } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", Icon: Home },
-  { to: "/shop", label: "Shop", Icon: Layers },
-  { to: "/orders", label: "Orders", Icon: FolderOpen },
+  { to: "/shop", label: "Shop", Icon: ShoppingBag },
+  { to: "/orders", label: "Orders", Icon: ClipboardList },
 ] as const;
 
 export function BottomNav() {
@@ -24,31 +24,28 @@ export function BottomNav() {
       {/* Mobile: dark glass pill, icon-only, filled with slight transparency,
           ending in a raised white circular CTA — matches the reference look */}
       <nav className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-center gap-2 px-4 pb-3 md:hidden">
-        <div className="glass-nav-dark flex items-center gap-1 rounded-full py-1.5 pr-1.5 pl-3 shadow-float">
-          {navItems.map(({ to, label, Icon }) => {
-            const active = isActive(to);
-            return (
-              <Link
-                key={to}
-                to={to}
-                aria-label={label}
-                className="grid size-10 place-items-center rounded-full transition-colors duration-300"
-              >
-                <Icon
-                  className={`size-[19px] transition-opacity ${active ? "text-white opacity-100" : "text-white opacity-55"}`}
-                  fill="currentColor"
-                  strokeWidth={1.5}
-                />
-              </Link>
-            );
-          })}
-          <Link
-            to="/contact"
-            aria-label="Contact"
-            className="grid size-11 shrink-0 place-items-center rounded-full bg-white shadow-card transition-transform active:scale-95"
-          >
-            <Send className="size-[18px] text-neutral-900" strokeWidth={2} />
-          </Link>
+        <div className="glass-nav-dark flex items-center gap-1 rounded-full p-1.5 shadow-float">
+          {[...navItems, { to: "/contact", label: "Contact", Icon: Send }].map(
+            ({ to, label, Icon }) => {
+              const active = isActive(to);
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  aria-label={label}
+                  className={`grid size-11 shrink-0 place-items-center rounded-full transition-all duration-300 ${
+                    active ? "bg-white shadow-card" : ""
+                  }`}
+                >
+                  <Icon
+                    className={`size-[18px] transition-colors ${active ? "text-neutral-900" : "text-white opacity-70"}`}
+                    fill={active ? "none" : "currentColor"}
+                    strokeWidth={active ? 2 : 1.5}
+                  />
+                </Link>
+              );
+            },
+          )}
         </div>
         <button
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
