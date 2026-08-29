@@ -217,6 +217,10 @@ function Checkout() {
 
   // ---------- Stage: choose delivery vs pickup, upfront ----------
   if (stage === "method") {
+    const options = [
+      { id: "delivery" as const, label: "Delivery", Icon: Truck, hint: "We bring it to you" },
+      { id: "pickup" as const, label: "Pickup", Icon: Store, hint: "Collect at our shop" },
+    ];
     return (
       <div className="px-5 pb-32 pt-6 animate-soft">
         <h1 className="text-2xl font-bold">How would you like your order?</h1>
@@ -224,32 +228,41 @@ function Checkout() {
           Pick one to continue — you can't switch later without restarting checkout.
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-4">
-          <button
-            onClick={() => {
-              setFulfillment("delivery");
-              setStage("Details");
-            }}
-            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
-          >
-            <Truck className="size-8" />
-            <span className="text-sm font-bold">Delivery</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setFulfillment("pickup");
-              setStage("Details");
-            }}
-            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
-          >
-            <Store className="size-8" />
-            <span className="text-sm font-bold">Pickup</span>
-          </button>
+        <div className="mt-5 grid max-w-md grid-cols-2 gap-4 md:max-w-sm md:gap-3">
+          {options.map(({ id, label, Icon, hint }) => {
+            const active = fulfillment === id;
+            return (
+              <button
+                key={id}
+                onClick={() => setFulfillment(id)}
+                className={`relative flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] bg-card p-3 transition-all duration-300 hover:scale-[1.02] md:aspect-[4/3] md:gap-1 md:p-2 ${
+                  active ? "border-info shadow-float" : "border-black/80"
+                }`}
+              >
+                <span
+                  className={`absolute right-2 top-2 size-3 rounded-full transition-all duration-300 md:size-2.5 ${
+                    active ? "scale-100 bg-info" : "scale-0 bg-transparent"
+                  }`}
+                />
+                <Icon className="size-8 md:size-6" />
+                <span className="text-sm font-bold md:text-xs">{label}</span>
+                <span className="text-[11px] text-muted-foreground md:text-[10px]">{hint}</span>
+              </button>
+            );
+          })}
         </div>
+
+        <button
+          onClick={() => fulfillment && setStage("Details")}
+          disabled={!fulfillment}
+          className="mt-6 w-full max-w-md rounded-sm bg-info py-4 text-base font-semibold text-info-foreground transition-opacity disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:opacity-60 md:max-w-sm md:py-3 md:text-sm"
+        >
+          Continue
+        </button>
       </div>
     );
   }
+
 
   // ---------- Stages: Details / Summary / Payment ----------
   return (
