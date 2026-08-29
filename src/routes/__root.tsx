@@ -15,6 +15,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { StoreProvider } from "../lib/store";
 import { LaunchOverlay } from "../components/LaunchOverlay";
+import { LaunchNotice } from "../components/LaunchNotice";
 import { TopNav } from "../components/TopNav";
 import { BottomNav } from "../components/BottomNav";
 import { WhatsAppFloat } from "../components/WhatsAppFloat";
@@ -143,6 +144,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
         <LaunchOverlay />
+        <LaunchNotice />
         <TopNav />
         <main className={`mx-auto min-h-screen max-w-5xl ${pageHasOwnFooter ? "" : "pb-28"}`}>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
