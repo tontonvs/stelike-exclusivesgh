@@ -87,7 +87,10 @@ export function TopNav() {
             <button aria-label="Cart" className="relative" onClick={() => setPanel("cart")}>
               <ShoppingCart className="size-[22px] transition-transform hover:scale-110" />
               {cartCount > 0 && (
-                <span className="absolute -right-2 -top-2 grid size-[18px] place-items-center rounded-full bg-background text-[10px] font-bold text-foreground">
+                <span
+                  className="absolute -right-2 -top-2 grid size-[18px] place-items-center rounded-full bg-red-600 text-[10px] font-bold text-white"
+                  style={{ animation: "badge-wave 5s ease-in-out infinite" }}
+                >
                   {cartCount}
                 </span>
               )}

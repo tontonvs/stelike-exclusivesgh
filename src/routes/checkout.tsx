@@ -9,6 +9,7 @@ import {
   Store,
   MapPin,
   ChevronLeft,
+  Loader2,
 } from "lucide-react";
 import { BUSINESS, cedis } from "@/lib/data";
 import { useStore, type Order } from "@/lib/store";
@@ -341,7 +342,11 @@ function Checkout() {
                     disabled={locating}
                     className="flex w-full items-center gap-2 rounded-sm bg-info/10 px-4 py-3 text-left text-sm font-semibold text-info disabled:opacity-60"
                   >
-                    <MapPin className="size-4" />
+                    {locating ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <MapPin className="size-4" />
+                    )}
                     {locating ? "Getting your location…" : "Share my location"}
                     <span className="ml-auto text-xs font-normal text-info/80">
                       Fastest — no typing needed
