@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { cedis, type Product } from "@/lib/data";
 import { useStore } from "@/lib/store";
@@ -14,12 +13,6 @@ export function ProductModal({
   onSelect: (p: Product) => void;
 }) {
   const { products, addToCart } = useStore();
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0 });
-  }, [product?.id]);
-
   if (!product) return null;
 
   const related = products
@@ -27,8 +20,8 @@ export function ProductModal({
     .slice(0, 3);
 
   return (
-    <div className="fixed inset-0 z-[70] flex justify-center bg-foreground/40 px-3 backdrop-blur-sm animate-soft md:px-0">
-      <div className="relative mt-16 mb-24 flex w-full max-w-xl flex-col overflow-hidden rounded-sm bg-background animate-rise md:mb-20">
+    <div className="fixed inset-0 z-[70] flex justify-center bg-foreground/40 backdrop-blur-sm animate-soft">
+      <div className="relative mt-16 mb-[84px] flex w-full max-w-xl flex-col overflow-hidden bg-background animate-rise md:mb-14 md:rounded-sm">
         <button
           onClick={onClose}
           aria-label="Close"
@@ -37,7 +30,7 @@ export function ProductModal({
           <X className="size-5" />
         </button>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 pb-28 pt-16">
+        <div className="flex-1 overflow-y-auto px-5 pb-28 pt-16">
           <img
             src={product.image}
             alt={product.name}
@@ -96,7 +89,7 @@ export function ProductModal({
           <button
             onClick={() => {
               addToCart(product);
-              toast.success("Added to cart", { description: product.name });
+              toast.success("Added to cart", { description: product.name, duration: 2000 });
               onClose();
             }}
             className="flex-1 rounded-sm bg-info py-3.5 text-base font-semibold text-info-foreground transition-opacity hover:opacity-90"

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, ShoppingBag, ClipboardList, Send, Moon, Sun } from "lucide-react";
+import { Home, Layers, FolderOpen, Send, Moon, Sun } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", Icon: Home },
-  { to: "/shop", label: "Shop", Icon: ShoppingBag },
-  { to: "/orders", label: "Orders", Icon: ClipboardList },
+  { to: "/shop", label: "Shop", Icon: Layers },
+  { to: "/orders", label: "Orders", Icon: FolderOpen },
 ] as const;
-
 
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -37,26 +36,18 @@ export function BottomNav() {
               >
                 <Icon
                   className={`size-[19px] transition-opacity ${active ? "text-white opacity-100" : "text-white opacity-55"}`}
-                  fill="none"
-                  strokeWidth={active ? 2.4 : 1.8}
+                  fill="currentColor"
+                  strokeWidth={1.5}
                 />
-
               </Link>
             );
           })}
           <Link
             to="/contact"
             aria-label="Contact"
-            className={`grid size-11 shrink-0 place-items-center rounded-full transition-all duration-300 active:scale-95 ${
-              isActive("/contact") ? "bg-white shadow-card" : "bg-transparent"
-            }`}
+            className="grid size-11 shrink-0 place-items-center rounded-full bg-white shadow-card transition-transform active:scale-95"
           >
-            <Send
-              className={`size-[18px] transition-opacity ${
-                isActive("/contact") ? "text-neutral-900 opacity-100" : "text-white opacity-55"
-              }`}
-              strokeWidth={isActive("/contact") ? 2.4 : 1.8}
-            />
+            <Send className="size-[18px] text-neutral-900" strokeWidth={2} />
           </Link>
         </div>
         <button
@@ -74,7 +65,7 @@ export function BottomNav() {
 
       {/* Desktop: plain full-width bar attached to the bottom, generic style */}
       <nav className="fixed inset-x-0 bottom-0 z-50 hidden h-14 border-t bg-nav text-nav-foreground md:block">
-        <div className="mx-auto flex h-full max-w-5xl items-center justify-center gap-10 px-5">
+        <div className="mx-auto flex h-full max-w-5xl items-center justify-center gap-16 px-5">
           {[...navItems, { to: "/contact", label: "Contact", Icon: Send }].map(
             ({ to, label, Icon }) => {
               const active = isActive(to);
@@ -82,10 +73,10 @@ export function BottomNav() {
                 <Link
                   key={to}
                   to={to}
-                  className={`flex items-center gap-2 border-b-2 px-1 py-1 text-sm font-semibold transition-colors ${
+                  className={`flex items-center gap-2 px-1 py-1 text-sm font-semibold transition-colors ${
                     active
-                      ? "border-nav-foreground text-nav-foreground"
-                      : "border-transparent text-nav-foreground/60 hover:text-nav-foreground"
+                      ? "text-nav-foreground"
+                      : "text-nav-foreground/60 hover:text-nav-foreground"
                   }`}
                 >
                   <Icon className="size-4" fill={active ? "currentColor" : "none"} strokeWidth={2} />

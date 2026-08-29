@@ -34,9 +34,6 @@
   --color-nav-foreground: var(--nav-foreground);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-
   --color-skeleton: var(--skeleton);
   --color-footer: var(--footer);
   --color-footer-foreground: var(--footer-foreground);
@@ -67,13 +64,10 @@
   --border: oklch(0.912 0.005 70);
   --input: oklch(0.912 0.005 70);
   --ring: oklch(0.45 0.014 55);
-  --nav: oklch(0.44 0.012 55);
-  --nav-foreground: oklch(0.985 0.002 60);
+  --nav: oklch(0.97 0.004 60);
+  --nav-foreground: oklch(0.32 0.016 55);
   --info: oklch(0.55 0.19 255);
   --info-foreground: oklch(0.985 0.002 60);
-  --success: oklch(0.58 0.15 150);
-  --success-foreground: oklch(0.985 0.002 60);
-
   --skeleton: oklch(0.925 0.005 70);
   --footer: oklch(0.30 0.006 60);
   --footer-foreground: oklch(0.965 0.002 60);
