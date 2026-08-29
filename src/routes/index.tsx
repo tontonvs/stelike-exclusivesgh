@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { categories, type Product } from "@/lib/data";
+import { categories, interleaveByCategory, type Product } from "@/lib/data";
 import { img } from "@/lib/images";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
@@ -64,7 +64,7 @@ function Home() {
   if (loading) return <HomeSkeleton />;
 
   const slide = slides[i]!;
-  const featured = products.slice(0, 6);
+  const featured = interleaveByCategory(products).slice(0, 6);
 
   return (
     <div className="animate-soft">

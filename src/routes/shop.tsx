@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { categories, type CategoryId, type Product } from "@/lib/data";
+import { categories, interleaveByCategory, type CategoryId, type Product } from "@/lib/data";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductModal } from "@/components/ProductModal";
@@ -42,7 +42,8 @@ function Shop() {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<Product | null>(null);
 
-  const filtered = products.filter(
+  const ordered = category ? products : interleaveByCategory(products);
+  const filtered = ordered.filter(
     (p) =>
       (!category || p.category === category) &&
       p.name.toLowerCase().includes(query.trim().toLowerCase()),

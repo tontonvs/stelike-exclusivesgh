@@ -30,6 +30,33 @@ export const categories: { id: CategoryId; label: string; image: string }[] = [
 export const categoryLabel = (id: CategoryId) =>
   categories.find((c) => c.id === id)?.label ?? id;
 
+// Interleaves products across categories (one per category per round) so
+// unfiltered views show a mix instead of being grouped by category order.
+export function interleaveByCategory(items: Product[]): Product[] {
+  const byCat = new Map<CategoryId, Product[]>();
+  for (const p of items) {
+    const bucket = byCat.get(p.category);
+    if (bucket) bucket.push(p);
+    else byCat.set(p.category, [p]);
+  }
+  const buckets = categories
+    .map((c) => byCat.get(c.id))
+    .filter((b): b is Product[] => !!b);
+  // Include any category not in the categories list (e.g. custom products)
+  for (const [id, bucket] of byCat) {
+    if (!categories.some((c) => c.id === id)) buckets.push(bucket);
+  }
+  const result: Product[] = [];
+  let i = 0;
+  while (result.length < items.length) {
+    for (const bucket of buckets) {
+      if (i < bucket.length) result.push(bucket[i]!);
+    }
+    i++;
+  }
+  return result;
+}
+
 const spec = (a: string, b: string) => ({ label: a, value: b });
 
 export const products: Product[] = [
