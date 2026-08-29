@@ -164,17 +164,6 @@ export const products: Product[] = [
     specs: [spec("Finish", "Walnut & white two-tone"), spec("Shelf", "1 open"), spec("Size", "110 x 55 x 38 cm")],
   },
   {
-    id: "tv-01",
-    name: "Fluted Wood Media Wall with Display Shelf",
-    category: "tv-stands",
-    price: 6200,
-    stock: 1,
-    image: tvProducts[0]!,
-    description: "Full media wall pairing a fluted-slat feature with a lit display shelf and floating cabinet base.",
-    specs: [spec("Shelving", "Open lit display"), spec("Panels", "Fluted wood"), spec("Build", "Custom to wall")],
-    badge: "Custom Build",
-  },
-  {
     id: "tv-02",
     name: "Floating Console with Fire Feature",
     category: "tv-stands",
@@ -516,6 +505,17 @@ export const products: Product[] = [
     image: img.glassTable,
     description: "Slim entryway console with a shelf for baskets and keys.",
     specs: [spec("Shelf", "1 open"), spec("Finish", "Walnut"), spec("Size", "120 x 35 x 80 cm")],
+  },
+  {
+    id: "tv-01",
+    name: "Fluted Wood Media Wall with Display Shelf",
+    category: "tv-stands",
+    price: 6200,
+    stock: 1,
+    image: tvProducts[0]!,
+    description: "Full media wall pairing a fluted-slat feature with a lit display shelf and floating cabinet base.",
+    specs: [spec("Shelving", "Open lit display"), spec("Panels", "Fluted wood"), spec("Build", "Custom to wall")],
+    badge: "Custom Build",
   },
 ];
 
