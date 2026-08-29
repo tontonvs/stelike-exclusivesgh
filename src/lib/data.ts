@@ -20,11 +20,11 @@ export type Product = {
 };
 
 export const categories: { id: CategoryId; label: string; image: string }[] = [
-  { id: "center-tables", label: "Center Tables", image: img.marbleTable },
-  { id: "tv-stands", label: "TV Stands & Units", image: img.tvStand },
-  { id: "mirrors", label: "Mirrors", image: img.mirror },
-  { id: "bed-frames", label: "Bed Frames", image: img.bed },
-  { id: "dressers", label: "Dressers", image: img.dresser },
+  { id: "center-tables", label: "Center Tables", image: img.centerTablesCategory },
+  { id: "tv-stands", label: "TV Stands & Units", image: img.tvStandsCategory },
+  { id: "mirrors", label: "Mirrors", image: img.mirrorsCategory },
+  { id: "bed-frames", label: "Bed Frames", image: img.bedFramesCategory },
+  { id: "dressers", label: "Dressers", image: img.dressersCategory },
 ];
 
 export const categoryLabel = (id: CategoryId) =>

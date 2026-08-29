@@ -8,6 +8,13 @@ import glassTable from "@/assets/glass-table.jpg";
 import vanityMirror from "@/assets/vanity-mirror.jpg";
 import upholsteredBed from "@/assets/upholstered-bed.jpg";
 
+// Real category cover photos
+import centerTablesCategory from "@/assets/center-tables-category.png";
+import tvStandsCategory from "@/assets/tv-stands-category.png";
+import dressersCategory from "@/assets/dressers-category.png";
+import bedFramesCategory from "@/assets/bed-frames-category.jpg";
+import mirrorsCategory from "@/assets/mirrors-category.jpg";
+
 export const img = {
   hero: heroAsset.url,
   tvStand: tvStandAsset.url,
@@ -18,4 +25,9 @@ export const img = {
   glassTable,
   vanityMirror,
   upholsteredBed,
+  centerTablesCategory,
+  tvStandsCategory,
+  dressersCategory,
+  bedFramesCategory,
+  mirrorsCategory,
 };
