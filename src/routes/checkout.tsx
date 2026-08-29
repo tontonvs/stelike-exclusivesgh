@@ -117,6 +117,8 @@ function Checkout() {
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [manualAddress, setManualAddress] = useState(false);
+  const [justLocated, setJustLocated] = useState(false);
+
 
   const [placed, setPlaced] = useState<Order | null>(null);
   const [paying, setPaying] = useState(false);
