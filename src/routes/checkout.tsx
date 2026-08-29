@@ -40,7 +40,7 @@ export const Route = createFileRoute("/checkout")({
 const PAYSTACK_PUBLIC_KEY = import.meta.env["VITE_PAYSTACK_PUBLIC_KEY"] ?? "pk_test_REPLACE_ME";
 
 type Fulfillment = "delivery" | "pickup";
-type Stage = "method" | CheckoutStep | "confirmed";
+type Stage = "method" | CheckoutStep;
 
 const pickupMapsLink = mapsLinkFor(BUSINESS.coords.lat, BUSINESS.coords.lng);
 
@@ -52,6 +52,57 @@ function BackButton({ onClick, label }: { onClick: () => void; label: string }) 
     >
       <ChevronLeft className="size-4" /> {label}
     </button>
+  );
+}
+
+// Success popup shown over a blurred/dimmed backdrop once payment is verified.
+function ConfirmationPopup({ order, onClose }: { order: Order; onClose: () => void }) {
+  const message = encodeURIComponent(
+    `Hello Stelike Exclusives, I have just placed an order.\n\n` +
+      `Order number: ${order.id}\n` +
+      `Name: ${order.name}\n` +
+      `Phone: ${order.phone}\n` +
+      `${order.fulfillment === "pickup" ? "Pickup" : "Delivery"}: ${order.address}\n\n` +
+      order.items.map((i) => `• ${i.qty} × ${i.name} — ${cedis(i.price * i.qty)}`).join("\n") +
+      `\n\nTotal: ${cedis(order.total)}`,
+  );
+  const followUp =
+    order.fulfillment === "pickup"
+      ? "We'll WhatsApp you once it's ready for pickup."
+      : "We'll WhatsApp you shortly to confirm delivery timing.";
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-foreground/40 p-5 backdrop-blur-sm animate-soft"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-sm rounded-sm bg-card p-6 text-center shadow-float animate-rise-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <ShieldCheck className="mx-auto size-10 text-info" />
+        <h1 className="mt-3 text-xl font-bold">Order confirmed</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{followUp}</p>
+        <p className="mt-4 rounded-sm bg-muted px-4 py-3 font-display text-2xl font-bold shadow-card">
+          {order.id}
+        </p>
+        <a
+          href={`https://wa.me/${BUSINESS.whatsapp}?text=${message}`}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-5 inline-flex items-center gap-1.5 rounded-full border-[2.5px] border-black bg-[#25D366] px-5 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90"
+        >
+          <MessageCircle className="size-4" /> WhatsApp
+        </a>
+        <Link
+          to="/orders"
+          onClick={onClose}
+          className="mt-4 block text-sm font-semibold text-muted-foreground"
+        >
+          View my orders
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -78,46 +129,6 @@ function Checkout() {
         <Sk className="h-52 w-full" />
       </div>
     );
-
-  // ---------- Confirmation ----------
-  if (placed) {
-    const message = encodeURIComponent(
-      `Hello Stelike Exclusives, I have just placed an order.\n\n` +
-        `Order number: ${placed.id}\n` +
-        `Name: ${placed.name}\n` +
-        `Phone: ${placed.phone}\n` +
-        `${placed.fulfillment === "pickup" ? "Pickup" : "Delivery"}: ${placed.address}\n\n` +
-        placed.items.map((i) => `• ${i.qty} × ${i.name} — ${cedis(i.price * i.qty)}`).join("\n") +
-        `\n\nTotal: ${cedis(placed.total)}`,
-    );
-    const followUp =
-      placed.fulfillment === "pickup"
-        ? "We'll WhatsApp you once it's ready for pickup."
-        : "We'll WhatsApp you shortly to confirm delivery timing.";
-    return (
-      <div className="px-5 pb-32 pt-10 animate-rise">
-        <div className="mx-auto max-w-md rounded-sm bg-card p-6 text-center shadow-card">
-          <ShieldCheck className="mx-auto size-10 text-info" />
-          <h1 className="mt-3 text-xl font-bold">Order confirmed</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{followUp}</p>
-          <p className="mt-4 rounded-sm border-[1.5px] border-info px-4 py-3 font-display text-2xl font-bold">
-            {placed.id}
-          </p>
-          <a
-            href={`https://wa.me/${BUSINESS.whatsapp}?text=${message}`}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-5 flex items-center justify-center gap-2 rounded-sm bg-info py-3.5 text-sm font-semibold text-info-foreground transition-opacity hover:opacity-90"
-          >
-            <MessageCircle className="size-4" /> Message us on WhatsApp
-          </a>
-          <Link to="/orders" className="mt-3 block text-sm font-semibold text-muted-foreground">
-            View my orders
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   const shareLocation = async () => {
     setLocationError(null);
@@ -213,26 +224,16 @@ function Checkout() {
           Pick one to continue — you can't switch later without restarting checkout.
         </p>
 
-        <div className="mt-5 space-y-3">
+        <div className="mt-5 grid grid-cols-2 gap-4">
           <button
             onClick={() => {
               setFulfillment("delivery");
               setStage("Details");
             }}
-            className="flex w-full items-start gap-3 rounded-sm bg-card p-4 text-left shadow-card transition-transform hover:scale-[1.01]"
+            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
           >
-            <span className="grid size-11 shrink-0 place-items-center rounded-full bg-info/15 text-info">
-              <Truck className="size-5" />
-            </span>
-            <span className="flex-1">
-              <span className="block text-base font-bold">Delivery</span>
-              <span className="mt-0.5 block text-sm text-muted-foreground">
-                Delivered to your address across {BUSINESS.areas}.
-              </span>
-              <span className="mt-1 block text-xs font-semibold text-info">
-                Delivery fee confirmed via WhatsApp
-              </span>
-            </span>
+            <Truck className="size-8" />
+            <span className="text-sm font-bold">Delivery</span>
           </button>
 
           <button
@@ -240,18 +241,10 @@ function Checkout() {
               setFulfillment("pickup");
               setStage("Details");
             }}
-            className="flex w-full items-start gap-3 rounded-sm bg-card p-4 text-left shadow-card transition-transform hover:scale-[1.01]"
+            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
           >
-            <span className="grid size-11 shrink-0 place-items-center rounded-full bg-info/15 text-info">
-              <Store className="size-5" />
-            </span>
-            <span className="flex-1">
-              <span className="block text-base font-bold">Pickup</span>
-              <span className="mt-0.5 block text-sm text-muted-foreground">
-                {BUSINESS.pickupAddress}
-              </span>
-              <span className="mt-1 block text-xs font-semibold text-info">No delivery fee</span>
-            </span>
+            <Store className="size-8" />
+            <span className="text-sm font-bold">Pickup</span>
           </button>
         </div>
       </div>
@@ -263,14 +256,14 @@ function Checkout() {
     <div className="px-5 pb-32 pt-6 animate-soft">
       <h1 className="text-2xl font-bold">Checkout</h1>
       <div className="mt-4">
-        <CheckoutStepper current={stage as CheckoutStep} />
+        <CheckoutStepper current={stage} />
       </div>
 
       {stage === "Details" && (
-        <div className="mt-6 animate-rise">
+        <div className="mt-6 animate-rise-sm">
           <BackButton onClick={() => setStage("method")} label="Change delivery method" />
 
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 space-y-3 rounded-sm bg-card p-5 shadow-card">
             {(
               [
                 ["name", "Full name", "text"],
@@ -284,7 +277,7 @@ function Checkout() {
                   value={form[key]}
                   onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                   type={type}
-                  className="mt-1 w-full rounded-sm bg-card px-4 py-3 text-sm shadow-card outline-none"
+                  className="mt-1 w-full rounded-sm bg-background px-4 py-3 text-sm outline-none"
                 />
               </label>
             ))}
@@ -350,7 +343,7 @@ function Checkout() {
                     value={form.address}
                     onChange={(e) => setForm({ ...form, address: e.target.value })}
                     placeholder="House number, street, area"
-                    className="mt-1 w-full rounded-sm bg-card px-4 py-3 text-sm shadow-card outline-none"
+                    className="mt-1 w-full rounded-sm bg-background px-4 py-3 text-sm outline-none"
                   />
                 )}
               </div>
@@ -376,7 +369,7 @@ function Checkout() {
                 value={form.note}
                 onChange={(e) => setForm({ ...form, note: e.target.value })}
                 placeholder="Gate code, landmark, delivery time…"
-                className="mt-1 w-full rounded-sm bg-card px-4 py-3 text-sm shadow-card outline-none"
+                className="mt-1 w-full rounded-sm bg-background px-4 py-3 text-sm outline-none"
               />
             </label>
           </div>
@@ -392,10 +385,10 @@ function Checkout() {
       )}
 
       {stage === "Summary" && (
-        <div className="mt-6 animate-rise">
+        <div className="mt-6 animate-rise-sm">
           <BackButton onClick={() => setStage("Details")} label="Back" />
 
-          <div className="mt-4 space-y-3 rounded-sm bg-card p-4 shadow-card">
+          <div className="mt-4 space-y-3 rounded-sm bg-card p-5 shadow-card">
             {cart.length === 0 ? (
               <p className="text-sm text-muted-foreground">Your cart is empty.</p>
             ) : (
@@ -435,40 +428,42 @@ function Checkout() {
       )}
 
       {stage === "Payment" && (
-        <div className="mt-6 animate-rise">
+        <div className="mt-6 animate-rise-sm">
           <BackButton onClick={() => setStage("Summary")} label="Back" />
 
-          <div className="mt-4 space-y-3 rounded-sm bg-card p-4 shadow-card">
-            <p className="text-sm font-bold">{form.name}</p>
-            <p className="text-sm text-muted-foreground">{form.phone}</p>
-            <p className="text-sm text-muted-foreground">
-              {fulfillment === "pickup" ? "Pickup: " : "Delivery: "}
-              {resolvedAddress}
-              {resolvedMapsLink && (
-                <>
-                  {" "}
-                  <a
-                    href={resolvedMapsLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-semibold text-info underline"
-                  >
-                    View on map
-                  </a>
-                </>
-              )}
-            </p>
-          </div>
-
-          <div className="mt-3 rounded-sm bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Total to pay</span>
-              <span className="text-lg font-bold">{cedis(cartTotal)}</span>
+          <div className="mt-4 space-y-4 rounded-sm bg-card p-5 shadow-card">
+            <div>
+              <p className="text-sm font-bold">{form.name}</p>
+              <p className="text-sm text-muted-foreground">{form.phone}</p>
+              <p className="text-sm text-muted-foreground">
+                {fulfillment === "pickup" ? "Pickup: " : "Delivery: "}
+                {resolvedAddress}
+                {resolvedMapsLink && (
+                  <>
+                    {" "}
+                    <a
+                      href={resolvedMapsLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-info underline"
+                    >
+                      View on map
+                    </a>
+                  </>
+                )}
+              </p>
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Pay securely by card or Mobile Money via Paystack. You'll get a confirmation once it's
-              done.
-            </p>
+
+            <div className="border-t pt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Total to pay</span>
+                <span className="text-lg font-bold">{cedis(cartTotal)}</span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Pay securely by card or Mobile Money via Paystack. You'll get a confirmation once
+                it's done.
+              </p>
+            </div>
           </div>
 
           {payError && (
@@ -489,6 +484,20 @@ function Checkout() {
             Demo mode — test card payments only, verified against Paystack's test API.
           </p>
         </div>
+      )}
+
+      {placed && (
+        <ConfirmationPopup
+          order={placed}
+          onClose={() => {
+            setPlaced(null);
+            setStage("method");
+            setFulfillment(null);
+            setForm({ name: "", phone: "", email: "", address: "", note: "" });
+            setSharedLocation(null);
+            setManualAddress(false);
+          }}
+        />
       )}
     </div>
   );

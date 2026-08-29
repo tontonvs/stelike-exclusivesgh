@@ -44,6 +44,9 @@ import tvProduct7 from "@/assets/tv-product-7.png";
 import tvProduct8 from "@/assets/tv-product-8.png";
 import tvProduct9 from "@/assets/tv-product-9.png";
 import tvProduct10 from "@/assets/tv-product-10.png";
+import tvProduct11 from "@/assets/tv-product-11.png";
+import tvProduct12 from "@/assets/tv-product-12.png";
+import tvProduct13 from "@/assets/tv-product-13.png";
 
 // Real center table product photos
 import tableProduct1 from "@/assets/table-product-1.png";
@@ -105,6 +108,9 @@ export const tvProducts = [
   tvProduct8,
   tvProduct9,
   tvProduct10,
+  tvProduct11,
+  tvProduct12,
+  tvProduct13,
 ];
 
 export const tableProducts = [

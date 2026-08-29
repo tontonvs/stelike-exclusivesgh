@@ -64,7 +64,9 @@ function Home() {
   if (loading) return <HomeSkeleton />;
 
   const slide = slides[i]!;
-  const featured = interleaveByCategory(products).slice(0, 6);
+  const heroPick = products.find((p) => p.id === "tv-11");
+  const restMixed = interleaveByCategory(products).filter((p) => p.id !== "tv-11");
+  const featured = (heroPick ? [heroPick, ...restMixed] : restMixed).slice(0, 6);
 
   return (
     <div className="animate-soft">

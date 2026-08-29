@@ -34,7 +34,7 @@ export function CheckoutStepper({ current }: { current: CheckoutStep }) {
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <span className={`mx-2 h-px flex-1 ${done ? "bg-info" : "bg-border"}`} aria-hidden />
+              <span className="mx-2 h-[3.5px] flex-1 bg-black" aria-hidden />
             )}
           </div>
         );
