@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Layers, FolderOpen, Send, Moon, Sun } from "lucide-react";
+import { Home, ShoppingBag, ClipboardList, Send, Moon, Sun } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", Icon: Home },
-  { to: "/shop", label: "Shop", Icon: Layers },
-  { to: "/orders", label: "Orders", Icon: FolderOpen },
+  { to: "/shop", label: "Shop", Icon: ShoppingBag },
+  { to: "/orders", label: "Orders", Icon: ClipboardList },
 ] as const;
+
 
 export function BottomNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
