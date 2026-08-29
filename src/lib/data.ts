@@ -530,4 +530,6 @@ export const BUSINESS = {
   city: "Accra, Ghana",
   coords: { lat: 5.6205, lng: -0.2295 },
   areas: "Accra, Achimota, East Legon, Kumasi, Takoradi",
+  pickupAddress: "Achimota, Accra",
 };
+
