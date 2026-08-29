@@ -38,9 +38,9 @@ export function BottomNav() {
                   }`}
                 >
                   <Icon
-                    className={`size-[18px] transition-colors ${active ? "text-neutral-900" : "text-white opacity-70"}`}
-                    fill={active ? "none" : "currentColor"}
-                    strokeWidth={active ? 2 : 1.5}
+                    className={`size-[18px] transition-colors ${active ? "text-neutral-900" : "text-white"}`}
+                    fill="none"
+                    strokeWidth={2}
                   />
                 </Link>
               );
