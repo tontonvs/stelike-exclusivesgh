@@ -190,7 +190,7 @@ function Checkout() {
     try {
       await openPaystackPopup({
         key: PAYSTACK_PUBLIC_KEY,
-        email: form.email,
+        email: form.email.trim() || `${form.phone.replace(/\D/g, "") || "guest"}@stelike-orders.gh`,
         amount: Math.round(cartTotal * 100), // GHS -> pesewas
         currency: "GHS",
         ref: generatePaystackReference(),
