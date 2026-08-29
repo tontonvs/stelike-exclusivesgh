@@ -526,6 +526,7 @@ export const BUSINESS = {
   instagram: ["@stelikexclusives", "@stelike_exclusives"],
   facebook: "Stelike Exclusives",
   city: "Accra, Ghana",
+  pickupAddress: "Achimota Neoplan Station, Accra",
   coords: { lat: 5.6205, lng: -0.2295 },
   areas: "Accra, Achimota, East Legon, Kumasi, Takoradi",
 };

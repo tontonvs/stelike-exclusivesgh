@@ -15,11 +15,15 @@ export type Order = {
   id: string;
   phone: string;
   name: string;
+  email?: string;
   items: { name: string; qty: number; price: number }[];
   total: number;
   status: "Processing" | "In transit" | "Delivered";
   createdAt: string;
   address: string;
+  fulfillment?: "delivery" | "pickup";
+  mapsLink?: string;
+  note?: string;
 };
 
 const seedOrders: Order[] = [
