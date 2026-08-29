@@ -1,5 +1,4 @@
 import heroAsset from "@/assets/hero_image.jpg.asset.json";
-import tvStandAsset from "@/assets/tv-stand.png.asset.json";
 import dresserAsset from "@/assets/dresser.png.asset.json";
 import marbleTable from "@/assets/marble-table.jpg";
 import glassTable from "@/assets/glass-table.jpg";
@@ -35,9 +34,20 @@ import bedProduct8 from "@/assets/bed-product-8.jpg";
 import bedProduct9 from "@/assets/bed-product-9.jpg";
 import bedProduct10 from "@/assets/bed-product-10.jpg";
 
+// Real TV stand product photos
+import tvProduct1 from "@/assets/tv-product-1.png";
+import tvProduct2 from "@/assets/tv-product-2.png";
+import tvProduct3 from "@/assets/tv-product-3.png";
+import tvProduct4 from "@/assets/tv-product-4.png";
+import tvProduct5 from "@/assets/tv-product-5.png";
+import tvProduct6 from "@/assets/tv-product-6.png";
+import tvProduct7 from "@/assets/tv-product-7.png";
+import tvProduct8 from "@/assets/tv-product-8.png";
+import tvProduct9 from "@/assets/tv-product-9.png";
+import tvProduct10 from "@/assets/tv-product-10.png";
+
 export const img = {
   hero: heroAsset.url,
-  tvStand: tvStandAsset.url,
   dresser: dresserAsset.url,
   marbleTable,
   glassTable,
@@ -72,4 +82,17 @@ export const bedProducts = [
   bedProduct8,
   bedProduct9,
   bedProduct10,
+];
+
+export const tvProducts = [
+  tvProduct1,
+  tvProduct2,
+  tvProduct3,
+  tvProduct4,
+  tvProduct5,
+  tvProduct6,
+  tvProduct7,
+  tvProduct8,
+  tvProduct9,
+  tvProduct10,
 ];
