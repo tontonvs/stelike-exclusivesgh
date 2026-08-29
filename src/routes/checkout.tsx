@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { MessageCircle, ShieldCheck } from "lucide-react";
+import { MessageCircle, ShieldCheck, AlertTriangle } from "lucide-react";
 import { BUSINESS, cedis } from "@/lib/data";
 import { useStore, type Order } from "@/lib/store";
 import { Sk, usePageLoading } from "@/components/Skeletons";
+import { generatePaystackReference, openPaystackPopup } from "@/lib/paystack-popup";
+import { verifyPaystackTransaction } from "@/lib/paystack";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -23,26 +25,18 @@ export const Route = createFileRoute("/checkout")({
   component: Checkout,
 });
 
-/**
- * PAYSTACK INTEGRATION POINT
- * ---------------------------------------------------------------
- * 1. Public key  -> paste your `pk_live_...` / `pk_test_...` below.
- * 2. Secret key  -> store as a backend secret (never in this file).
- * 3. Init charge -> call your server endpoint that hits
- *    POST https://api.paystack.co/transaction/initialize
- *    with { email, amount: total * 100, currency: "GHS" }.
- * 4. Webhook     -> create POST /api/public/paystack-webhook,
- *    verify the `x-paystack-signature` HMAC-SHA512 with your secret key,
- *    then mark the matching order as paid.
- */
-const PAYSTACK_PUBLIC_KEY = "pk_test_REPLACE_ME";
-const PAYSTACK_INIT_ENDPOINT = "/api/public/paystack-initialize";
+// Public key only — safe to ship to the browser. Set VITE_PAYSTACK_PUBLIC_KEY
+// in your .env (see .env.example). Falls back to a placeholder so the button
+// still renders (and clearly fails) if the key hasn't been configured yet.
+const PAYSTACK_PUBLIC_KEY = import.meta.env["VITE_PAYSTACK_PUBLIC_KEY"] ?? "pk_test_REPLACE_ME";
 
 function Checkout() {
   const loading = usePageLoading();
   const { cart, cartTotal, placeOrder, clearCart } = useStore();
-  const [form, setForm] = useState({ name: "", phone: "", address: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", address: "" });
   const [placed, setPlaced] = useState<Order | null>(null);
+  const [paying, setPaying] = useState(false);
+  const [payError, setPayError] = useState<string | null>(null);
 
   if (loading)
     return (
@@ -92,14 +86,10 @@ function Checkout() {
     );
   }
 
-  const disabled = cart.length === 0 || !form.name || !form.phone || !form.address;
+  const disabled =
+    cart.length === 0 || !form.name || !form.phone || !form.email || !form.address || paying;
 
-  const pay = async () => {
-    // Replace this block with a Paystack init call once keys are configured:
-    // const res = await fetch(PAYSTACK_INIT_ENDPOINT, { method: "POST", body: JSON.stringify({ ...form, amount: cartTotal * 100 }) })
-    // window.location.href = (await res.json()).authorization_url
-    void PAYSTACK_PUBLIC_KEY;
-    void PAYSTACK_INIT_ENDPOINT;
+  const finalizeOrder = () => {
     const order = placeOrder({
       name: form.name,
       phone: form.phone,
@@ -109,6 +99,47 @@ function Checkout() {
     });
     clearCart();
     setPlaced(order);
+  };
+
+  const pay = async () => {
+    setPayError(null);
+    setPaying(true);
+    try {
+      await openPaystackPopup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: form.email,
+        amount: Math.round(cartTotal * 100), // GHS -> pesewas
+        currency: "GHS",
+        ref: generatePaystackReference(),
+        metadata: { name: form.name, phone: form.phone, address: form.address },
+        onClose: () => setPaying(false),
+        callback: (response) => {
+          // Runs after Paystack reports success client-side. We still verify
+          // server-side with the secret key before trusting it.
+          void (async () => {
+            try {
+              const result = await verifyPaystackTransaction({
+                data: { reference: response.reference },
+              });
+              if (result.verified) {
+                finalizeOrder();
+              } else {
+                setPayError(
+                  result.error ?? "We couldn't verify that payment. Please try again.",
+                );
+              }
+            } catch {
+              setPayError("We couldn't reach the server to verify payment. Please try again.");
+            } finally {
+              setPaying(false);
+            }
+          })();
+        },
+      });
+    } catch {
+      setPayError("Paystack could not be loaded. Check your connection and try again.");
+      setPaying(false);
+    }
   };
 
   return (
@@ -139,6 +170,7 @@ function Checkout() {
           [
             ["name", "Full name"],
             ["phone", "Phone number"],
+            ["email", "Email (for payment receipt)"],
             ["address", "Delivery address"],
           ] as const
         ).map(([key, label]) => (
@@ -147,21 +179,29 @@ function Checkout() {
             <input
               value={form[key]}
               onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+              type={key === "email" ? "email" : "text"}
               className="mt-1 w-full rounded-sm bg-card px-4 py-3 text-sm shadow-card outline-none"
             />
           </label>
         ))}
       </div>
 
+      {payError && (
+        <div className="mt-4 flex items-start gap-2 rounded-sm border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
+          <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+          <span>{payError}</span>
+        </div>
+      )}
+
       <button
         onClick={pay}
         disabled={disabled}
         className="mt-5 w-full rounded-sm bg-primary py-4 text-base font-semibold text-primary-foreground disabled:opacity-40"
       >
-        Pay with Paystack
+        {paying ? "Processing…" : "Pay with Paystack"}
       </button>
       <p className="mt-2 text-center text-xs text-muted-foreground">
-        Demo mode — connect your Paystack keys and webhook to take live payments.
+        Demo mode — test card payments only, verified against Paystack's test API.
       </p>
     </div>
   );
