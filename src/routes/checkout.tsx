@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
+  Check,
   MessageCircle,
   ShieldCheck,
   AlertTriangle,
@@ -117,6 +118,8 @@ function Checkout() {
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [manualAddress, setManualAddress] = useState(false);
+  const [justLocated, setJustLocated] = useState(false);
+
 
   const [placed, setPlaced] = useState<Order | null>(null);
   const [paying, setPaying] = useState(false);
@@ -138,6 +141,8 @@ function Checkout() {
       setSharedLocation({ lat: loc.lat, lng: loc.lng });
       setManualAddress(false);
       setForm((f) => ({ ...f, address: "" }));
+      setJustLocated(true);
+      window.setTimeout(() => setJustLocated(false), 2200);
     } catch (err) {
       setLocationError(err instanceof Error ? err.message : "Couldn't get your location.");
     } finally {
@@ -145,9 +150,10 @@ function Checkout() {
     }
   };
 
+
   const hasDeliveryAddress = fulfillment === "pickup" || !!sharedLocation || !!form.address.trim();
-  const detailsValid =
-    form.name.trim() && form.phone.trim() && form.email.trim() && hasDeliveryAddress;
+  const detailsValid = form.name.trim() && form.phone.trim() && hasDeliveryAddress;
+
 
   const resolvedAddress =
     fulfillment === "pickup"
@@ -184,7 +190,7 @@ function Checkout() {
     try {
       await openPaystackPopup({
         key: PAYSTACK_PUBLIC_KEY,
-        email: form.email,
+        email: form.email.trim() || `${form.phone.replace(/\D/g, "") || "guest"}@stelike-orders.gh`,
         amount: Math.round(cartTotal * 100), // GHS -> pesewas
         currency: "GHS",
         ref: generatePaystackReference(),
@@ -217,6 +223,10 @@ function Checkout() {
 
   // ---------- Stage: choose delivery vs pickup, upfront ----------
   if (stage === "method") {
+    const options = [
+      { id: "delivery" as const, label: "Delivery", Icon: Truck, hint: "We bring it to you" },
+      { id: "pickup" as const, label: "Pickup", Icon: Store, hint: "Collect at our shop" },
+    ];
     return (
       <div className="px-5 pb-32 pt-6 animate-soft">
         <h1 className="text-2xl font-bold">How would you like your order?</h1>
@@ -224,32 +234,41 @@ function Checkout() {
           Pick one to continue — you can't switch later without restarting checkout.
         </p>
 
-        <div className="mt-5 grid grid-cols-2 gap-4">
-          <button
-            onClick={() => {
-              setFulfillment("delivery");
-              setStage("Details");
-            }}
-            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
-          >
-            <Truck className="size-8" />
-            <span className="text-sm font-bold">Delivery</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setFulfillment("pickup");
-              setStage("Details");
-            }}
-            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] border-black bg-card p-3 transition-transform hover:scale-[1.02]"
-          >
-            <Store className="size-8" />
-            <span className="text-sm font-bold">Pickup</span>
-          </button>
+        <div className="mt-5 grid max-w-md grid-cols-2 gap-4 md:max-w-sm md:gap-3">
+          {options.map(({ id, label, Icon, hint }) => {
+            const active = fulfillment === id;
+            return (
+              <button
+                key={id}
+                onClick={() => setFulfillment(id)}
+                className={`relative flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] bg-card p-3 transition-all duration-300 hover:scale-[1.02] md:aspect-[4/3] md:gap-1 md:p-2 ${
+                  active ? "border-info shadow-float" : "border-black/80"
+                }`}
+              >
+                <span
+                  className={`absolute right-2 top-2 size-3 rounded-full transition-all duration-300 md:size-2.5 ${
+                    active ? "scale-100 bg-info" : "scale-0 bg-transparent"
+                  }`}
+                />
+                <Icon className="size-8 md:size-6" />
+                <span className="text-sm font-bold md:text-xs">{label}</span>
+                <span className="text-[11px] text-muted-foreground md:text-[10px]">{hint}</span>
+              </button>
+            );
+          })}
         </div>
+
+        <button
+          onClick={() => fulfillment && setStage("Details")}
+          disabled={!fulfillment}
+          className="mt-6 w-full max-w-md rounded-sm bg-info py-4 text-base font-semibold text-info-foreground transition-opacity disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground disabled:opacity-60 md:max-w-sm md:py-3 md:text-sm"
+        >
+          Continue
+        </button>
       </div>
     );
   }
+
 
   // ---------- Stages: Details / Summary / Payment ----------
   return (
@@ -268,7 +287,7 @@ function Checkout() {
               [
                 ["name", "Full name", "text"],
                 ["phone", "Phone number", "text"],
-                ["email", "Email (for payment receipt)", "email"],
+                ["email", "Email (optional — for payment receipt)", "email"],
               ] as const
             ).map(([key, label, type]) => (
               <label key={key} className="block">
@@ -289,20 +308,27 @@ function Checkout() {
                 </span>
 
                 {sharedLocation ? (
-                  <div className="flex items-center justify-between rounded-sm bg-info/10 px-4 py-3">
-                    <span className="flex items-center gap-2 text-sm font-semibold text-info">
-                      <MapPin className="size-4" /> Location shared
+                  <div className="flex items-center justify-between rounded-sm bg-success/10 px-4 py-3 animate-rise-sm">
+                    <span className="flex items-center gap-2 text-sm font-semibold text-success">
+                      <span
+                        className="grid size-6 shrink-0 place-items-center rounded-full bg-success text-white"
+                        style={justLocated ? { animation: "check-pop 600ms ease-out" } : undefined}
+                      >
+                        <Check className="size-4" strokeWidth={3} />
+                      </span>
+                      Location added
                     </span>
                     <a
                       href={mapsLinkFor(sharedLocation.lat, sharedLocation.lng)}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs font-semibold text-info underline"
+                      className="text-xs font-semibold text-success underline"
                     >
                       View on map
                     </a>
                   </div>
                 ) : (
+
                   <button
                     type="button"
                     onClick={shareLocation}

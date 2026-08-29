@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Search,
@@ -45,13 +45,41 @@ export function TopNav() {
   const close = () => setPanel(null);
   const fullscreen = panel === "cart" || panel === "bell";
 
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+
   return (
     <>
       <header className="sticky top-0 z-[60] bg-nav text-nav-foreground">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5">
-          <Link to="/" className="font-display text-xl font-bold tracking-[0.22em]">
-            STELIKE
+          <Link to="/" aria-label="Stelike Exclusives home" className="relative flex h-10 items-center">
+            <span
+              className="font-display text-xl font-bold tracking-[0.22em] transition-all duration-500 ease-out"
+              style={{
+                opacity: scrolled ? 0 : 1,
+                transform: scrolled ? "scale(0.6)" : "scale(1)",
+                filter: scrolled ? "blur(3px)" : "blur(0px)",
+              }}
+            >
+              STELIKE
+            </span>
+            <img
+              src={logoAsset.url}
+              alt="Stelike Exclusives"
+              className="absolute left-0 size-9 object-contain transition-all duration-500 ease-out"
+              style={{
+                opacity: scrolled ? 1 : 0,
+                transform: scrolled ? "scale(1)" : "scale(1.6)",
+              }}
+            />
           </Link>
+
           <div className="flex items-center gap-5">
             <button aria-label="Search" onClick={() => setPanel("search")}>
               <Search className="size-[22px] transition-transform hover:scale-110" />
