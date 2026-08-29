@@ -23,7 +23,7 @@ export function BottomNav() {
     <>
       {/* Mobile: dark glass pill, icon-only, filled with slight transparency,
           ending in a raised white circular CTA — matches the reference look */}
-      <nav className="fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-3 md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-center gap-2 px-4 pb-3 md:hidden">
         <div className="glass-nav-dark flex items-center gap-1 rounded-full py-1.5 pr-1.5 pl-3 shadow-float">
           {navItems.map(({ to, label, Icon }) => {
             const active = isActive(to);
@@ -42,17 +42,6 @@ export function BottomNav() {
               </Link>
             );
           })}
-          <button
-            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={() => setDark((d) => !d)}
-            className="grid size-10 place-items-center rounded-full transition-opacity"
-          >
-            {dark ? (
-              <Sun className="size-[19px] text-white opacity-55" strokeWidth={1.5} />
-            ) : (
-              <Moon className="size-[19px] text-white opacity-55" fill="currentColor" strokeWidth={1.5} />
-            )}
-          </button>
           <Link
             to="/contact"
             aria-label="Contact"
@@ -61,6 +50,17 @@ export function BottomNav() {
             <Send className="size-[18px] text-neutral-900" strokeWidth={2} />
           </Link>
         </div>
+        <button
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          onClick={() => setDark((d) => !d)}
+          className="glass-nav-dark grid size-11 shrink-0 place-items-center rounded-full shadow-float transition-transform hover:scale-105"
+        >
+          {dark ? (
+            <Sun className="size-[18px] text-white opacity-90" strokeWidth={1.5} />
+          ) : (
+            <Moon className="size-[18px] text-white opacity-90" fill="currentColor" strokeWidth={1.5} />
+          )}
+        </button>
       </nav>
 
       {/* Desktop: plain full-width bar attached to the bottom, generic style */}
