@@ -37,9 +37,10 @@ export function BottomNav() {
               >
                 <Icon
                   className={`size-[19px] transition-opacity ${active ? "text-white opacity-100" : "text-white opacity-55"}`}
-                  fill="currentColor"
-                  strokeWidth={1.5}
+                  fill="none"
+                  strokeWidth={active ? 2.4 : 1.8}
                 />
+
               </Link>
             );
           })}
