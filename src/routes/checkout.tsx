@@ -246,14 +246,16 @@ function Checkout() {
                 key={id}
                 onClick={() => setFulfillment(id)}
                 className={`relative flex aspect-square flex-col items-center justify-center gap-2 rounded-sm border-[3px] bg-card p-3 transition-all duration-300 hover:scale-[1.02] md:aspect-[4/3] md:gap-1 md:p-2 ${
-                  active ? "border-info shadow-float" : "border-black/80"
+                  active ? "border-black shadow-float" : "border-transparent"
                 }`}
               >
                 <span
-                  className={`absolute right-2 top-2 size-3 rounded-full transition-all duration-300 md:size-2.5 ${
-                    active ? "scale-100 bg-info" : "scale-0 bg-transparent"
+                  className={`absolute right-2 top-2 grid size-4 place-items-center rounded-full transition-all duration-300 md:size-3.5 ${
+                    active ? "scale-100 ring-2 ring-black/25" : "scale-0"
                   }`}
-                />
+                >
+                  <span className="size-2 rounded-full bg-black md:size-1.5" />
+                </span>
                 <Icon className="size-8 md:size-6" />
                 <span className="text-sm font-bold md:text-xs">{label}</span>
                 <span className="text-[11px] text-muted-foreground md:text-[10px]">{hint}</span>

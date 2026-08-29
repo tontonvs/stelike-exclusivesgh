@@ -4,22 +4,25 @@ import logoSrc from "@/assets/stelike-logo.png";
 
 type Slide = {
   kicker: string;
+  kickerClassName?: string;
   title: string;
   body: string;
   image?: string;
+  warning?: string;
 };
 
 const slides: Slide[] = [
   {
     kicker: "Welcome",
     title: "Stelike Exclusives",
-    body: "A members' demo of the Stelike Exclusives store — browse, preview and test-order our custom furniture.",
+    body: "A demo for members of the Stelike Exclusives store — browse, preview and test-order our custom furniture.",
     image: logoSrc,
   },
   {
     kicker: "Heads up",
     title: "This is a demo",
     body: "Some corners are still rough and a few flows may act up. Nothing here charges you for real.",
+    warning: "Payments aren't real",
   },
   {
     kicker: "What works",
@@ -28,6 +31,7 @@ const slides: Slide[] = [
   },
   {
     kicker: "Coming next",
+    kickerClassName: "text-rose-500",
     title: "Staff dashboard & analytics",
     body: "A staff area to view and control orders, stock and dispatch, plus sales analytics on top sellers, areas and revenue trends.",
   },
@@ -67,11 +71,17 @@ export function LaunchNotice() {
               className="mx-auto mb-3 h-20 w-auto object-contain"
             />
           )}
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-info">
+          <p className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${slide.kickerClassName ?? "text-info"}`}>
             {slide.kicker}
           </p>
           <h2 className="mt-1 font-display text-lg font-bold leading-tight">{slide.title}</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{slide.body}</p>
+          {slide.warning && (
+            <>
+              <div className="mt-3 h-px w-full bg-red-500/70" />
+              <p className="mt-2 text-xs font-semibold text-red-500">{slide.warning}</p>
+            </>
+          )}
         </div>
 
         <div className="mt-4 flex items-center justify-between">
