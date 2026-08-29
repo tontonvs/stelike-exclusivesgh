@@ -16,7 +16,7 @@ export function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed right-4 bottom-24 z-[55] grid size-13 place-items-center rounded-full bg-[#25D366] text-white shadow-float transition-transform hover:scale-105 md:right-8 md:bottom-20"
+      className="fixed right-4 bottom-24 z-[55] grid size-13 place-items-center rounded-full border-[3px] border-black bg-[#25D366] text-black shadow-float transition-transform hover:scale-105 md:right-8 md:bottom-20"
       style={{ width: 52, height: 52 }}
     >
       <WhatsAppLogo className="size-6" />
