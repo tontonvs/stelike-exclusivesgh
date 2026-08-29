@@ -286,7 +286,7 @@ function Checkout() {
               [
                 ["name", "Full name", "text"],
                 ["phone", "Phone number", "text"],
-                ["email", "Email (for payment receipt)", "email"],
+                ["email", "Email (optional — for payment receipt)", "email"],
               ] as const
             ).map(([key, label, type]) => (
               <label key={key} className="block">
